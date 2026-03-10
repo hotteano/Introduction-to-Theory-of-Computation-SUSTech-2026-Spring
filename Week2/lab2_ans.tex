@@ -1,0 +1,293 @@
+\documentclass[a4paper, UTF-8]{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+
+\theoremstyle{plain}
+\newtheorem{theorem}{\indent Theorem}[section]
+\newtheorem{lemma}[theorem]{\indent Lemma}
+\newtheorem{assumption}{\indent Assumption}[section]
+\newtheorem{note}[theorem]{\indent Notation}
+\newtheorem{proposition}[theorem]{\indent Proposition}
+\newtheorem{corollary}[theorem]{\indent Corollary}
+\newtheorem{definition}{\indent Definition}[section]
+\newtheorem{example}{\indent Example}[section]
+\newtheorem{remark}{\indent Remark}[section]
+\newenvironment{solution}{\begin{proof}[\indent\bf Solution]}{\end{proof}}
+\renewcommand{\proofname}{\indent\bf Proof}
+
+\begin{document}
+
+\title{\bf{Lab1 Answers}}
+
+\author{Yanqiao Chen*\\ 
+  Department of Computer Science and Engineering\\
+  Southern University of Science and Technology\\
+  \texttt{12412115@mail.sustech.edu.cn}
+  }
+
+\maketitle
+
+\section{Question 1}
+
+\subsection{a) $\{w|w \text{ ends with } $00$\}$} 
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto] 
+   \node[state, initial] (q_0)   {$q0$}; 
+   \node[state] (q_1) [above right=of q_0] {$q1$}; 
+   \node[state, accepting] (q_2) [below right=of q_0] {$q2$}; 
+   \path[->] 
+    (q_0) edge  node {0} (q_1)
+    (q_0) edge [loop below] node {0,1} (q_0)
+    (q_1) edge  node {0} (q_2)
+    ;
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{b) $\{w| w \text{ contains the substring } 0101\}$}
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto] 
+   \node[state, initial] (q_0)   {$q0$}; 
+   \node[state] (q_1) [above right=of q_0] {$q1$}; 
+   \node[state] (q_2) [below right=of q_0] {$q2$}; 
+   \node[state] (q_3) [below right=of q_1] {$q3$}; 
+   \node[state, accepting] (q_4) [below right=of q_2] {$q4$};
+   \path[->] 
+    (q_0) edge  node {0} (q_1)
+    (q_1) edge node {1} (q_2)
+    (q_2) edge node {0} (q_3)
+    (q_3) edge node {1} (q_4)
+    (q_0) edge [loop above] node {0, 1} (q_0)
+    (q_4) edge [loop below] node {0, 1} (q_4)
+    ;
+\end{tikzpicture}
+\end{center}
+
+\subsection{c) $\{w| w \text{ contains an even number of } 0\text{'s, or contains exactly two 1's}\}$}
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2.5cm, on grid, auto] 
+   \node[state, initial] (q_0)   {$q_0$}; 
+   
+   % 偶数个 0 分支 (q1, q3)
+   \node[state, accepting] (q_1) [above right=of q_0] {$q_1$}; 
+   \node[state] (q_3) [right=of q_1] {$q_3$}; 
+   
+   % 恰好两个 1 分支 (q2, q4, q5)
+   \node[state] (q_2) [below right=of q_0] {$q_2$}; 
+   \node[state] (q_4) [right=of q_2] {$q_4$};
+   \node[state, accepting] (q_5) [right=of q_4] {$q_5$};
+   
+   \path[->] 
+    % 从初始状态分支
+    (q_0) edge  node {$\epsilon$} (q_1)
+    (q_0) edge  node {$\epsilon$} (q_2)
+    
+    % 偶数个 0：q1(偶数,接受) <-> q3(奇数)
+    (q_1) edge [bend left] node {0} (q_3)
+    (q_3) edge [bend left] node {0} (q_1)
+    (q_1) edge [loop above] node {1} (q_1)
+    (q_3) edge [loop above] node {1} (q_3)
+    
+    % 恰好两个 1：q2(0个1) -> q4(1个1) -> q5(2个1,接受)
+    (q_2) edge node {1} (q_4)
+    (q_4) edge node {1} (q_5)
+    (q_2) edge [loop below] node {0} (q_2)
+    (q_4) edge [loop below] node {0} (q_4)
+    (q_5) edge [loop below] node {0} (q_5)
+    ;
+\end{tikzpicture}
+\end{center}
+
+\subsection{d) Language $\{0\}$}
+
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto] 
+   \node[state, initial] (q_0)   {$q0$}; 
+   \node[state, accepting] (q_1) [above right=of q_0] {$q1$}; 
+   \path[->] 
+    (q_0) edge  node {0} (q_1)
+    ;
+\end{tikzpicture}
+\end{center}
+
+\subsection{e) The language $0^*1^*0^+$ using three states}
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2.5cm, on grid, auto] 
+   \node[state, initial] (q_0)   {$q_0$}; 
+   \node[state] (q_1) [right=of q_0] {$q_1$}; 
+   \node[state, accepting] (q_2) [right=of q_1] {$q_2$}; 
+   
+   \path[->] 
+    % q_0 的自环 (0*)
+    (q_0) edge [loop above] node {0} (q_0)
+    % q_0 到 q_1 (进入 1*)
+    (q_0) edge node {1} (q_1)
+    % q_0 到 q_2 (开始结尾的 0+)
+    (q_0) edge [bend right=30] node[below] {0} (q_2)
+    
+    % q_1 的自环 (1*)
+    (q_1) edge [loop above] node {1} (q_1)
+    % q_1 到 q_2 (进入结尾的 0+)
+    (q_1) edge node {0} (q_2)
+    
+    % q_2 的自环 (0+)
+    (q_2) edge [loop below] node {0} (q_2)
+    ;
+\end{tikzpicture}
+\end{center}
+
+\subsection{f) The language $1^*(001^+)^*$ with three states}
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2.5cm, on grid, auto] 
+   \node[state, initial, accepting] (q_0)   {$q_0$}; 
+   \node[state] (q_1) [right=of q_0] {$q_1$}; 
+   \node[state] (q_2) [right=of q_1] {$q_2$}; 
+   
+   \path[->] 
+    % q_0: 处理开头的 1*，也是 $(001^+)^*$ 每个循环的结束点
+    (q_0) edge [loop above] node {1} (q_0)
+    (q_0) edge node {0} (q_1)
+    
+    % q_1: 等待第二个 0 完成 "00"
+    (q_1) edge node {0} (q_2)
+    
+    % q_2: 完成 00，必须读至少一个 1 回到 q_0
+    (q_2) edge [bend left=30] node {1} (q_0)
+    ;
+\end{tikzpicture}
+\end{center}
+
+\subsection{g) Language $\{\epsilon\}$}
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2.5cm, on grid, auto] 
+   \node[state, initial, accepting] (q_0)   {$q_0$}; 
+    ;
+\end{tikzpicture}
+\end{center}
+
+\subsection{h) Language $\{0^*\}$}
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2.5cm, on grid, auto] 
+   \node[state, initial, accepting] (q_0)   {$q_0$}; 
+   \path[->] 
+    (q_0) edge [loop above] node {0} (q_0)
+    ;
+\end{tikzpicture}
+\end{center}
+
+\section{Question 2} 
+
+\subsection{a} 
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2.5cm, on grid, auto] 
+   \node[state, initial] (q_0) {$q_0$}; 
+   \node[state] (q_1) [right=of q_0] {$q_1$}; 
+   \node[state] (q_2) [below=of q_1] {$q_2$};
+   \node[state] (q_3) [right of=q_1] {$q_3$}; 
+   \node[state] (q_4) [right of=q_2] {$q_4$};
+   \node[state, accepting] (q_5) [right=of q_3] {$q_5$};
+   \node[state, accepting] (q_6) [right=of q_4] {$q_6$};
+   \path[->] 
+    (q_0) edge node {$\epsilon$} (q_1)
+    (q_0) edge node {$\epsilon$} (q_2)
+    (q_1) edge node {$0$} (q_3)
+    (q_3) edge [bend left] node {$1$} (q_5) 
+    (q_5) edge [loop right] node {$1$} (q_5)
+    (q_3) edge [loop above] node {$0$} (q_3)
+    (q_5) edge [bend left] node {$0$} (q_3)
+    (q_2) edge node {$1$} (q_4)
+    (q_4) edge node {$1$} (q_6)
+    (q_4) edge [loop below] node {$0$} (q_4)
+    (q_6) edge [loop right] node {$0, 1$} (q_6)
+    ;
+\end{tikzpicture}
+\end{center}
+
+\subsection{b}
+
+\begin{center} 
+\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto] 
+   % 新建初始状态
+   \node[state, initial] (q_8) {$q_8$}; 
+   
+   % L1 部分 (0101)
+   \node[state] (q_0) [above right=of q_8] {$q_0$}; 
+   \node[state] (q_1) [right=of q_0] {$q_1$}; 
+   \node[state] (q_2) [right=of q_1] {$q_2$};
+   \node[state] (q_3) [right=of q_2] {$q_3$};
+   \node[state, accepting] (q_4) [right=of q_3] {$q_4$};
+   
+   % L2 部分 (不含111)
+   \node[state, accepting] (q_5) [below right=of q_8] {$q_5$};
+   \node[state, accepting] (q_6) [right=of q_5] {$q_6$};
+   \node[state, accepting] (q_7) [right=of q_6] {$q_7$};
+   
+   \path[->] 
+    % 并集构造：从 q_8 分支
+    (q_8) edge node {$\epsilon$} (q_0)
+    (q_8) edge node {$\epsilon$} (q_5)
+    
+    % L1 转移 (找 0101)
+    % q_0: 等待第一个0
+    (q_0) edge [loop above] node {1} (q_0)
+    (q_0) edge node {0} (q_1)
+    % q_1: 已有0，等待1
+    (q_1) edge [loop below] node {0} (q_1)
+    (q_1) edge node {1} (q_2)
+    % q_2: 已有01，等待0
+    (q_2) edge node {0} (q_3)
+    (q_2) edge [bend right=30] node[above] {1} (q_0)
+    % q_3: 已有010，等待1
+    (q_3) edge node {1} (q_4)
+    (q_3) edge [bend left=30] node[below] {0} (q_1)
+    % q_4: 接受状态
+    (q_4) edge [loop above] node {0,1} (q_4)
+    
+    % L2 转移 (不含111)
+    % 计数连续1的个数
+    (q_5) edge [loop below] node {0} (q_5)
+    (q_5) edge node {1} (q_6)
+    (q_6) edge [bend left=30] node[below] {0} (q_5)
+    (q_6) edge node {1} (q_7)
+    (q_7) edge [bend right=30] node[above] {0} (q_5)
+    (q_7) edge [loop below] node {0} (q_7)
+    % q_7 读1会进入未定义状态（相当于陷阱），所以不写
+    ;
+\end{tikzpicture}
+\end{center}
+
+\section{Question 3}
+
+\section{Question 4} 
+
+\section{Question 5} 
+
+\section{Question 6}
+
+
+\section{Question 7}
+
+\end{document}
