@@ -50,7 +50,7 @@
     \item [d.] $\Sigma^2 0\Sigma^*$ 
     \item [e.] $(0(\Sigma^2)^*)\cup (1(\Sigma^2)^*\Sigma) $ 
     \item [f.] $(0 \cup 10)^* 1^*$
-    \item [g.] $(\Sigma \cup \epsilon)^*$ 
+    \item [g.] $(\Sigma \cup \epsilon)^5$ 
     \item [h.] $\epsilon \cup 1 \cup 0\Sigma^* \cup 10\Sigma^* \cup 110\Sigma^* \cup 111\Sigma^+$
     \item [i.] $(1 \Sigma)^*(1 \cup \epsilon)$ 
     \item [j.] $000^* \cup 1000^* \cup 0100^* \cup 0010^* \cup 000^* 1 0^*$
@@ -149,9 +149,11 @@ For $(((11)^*(00)) \cup 01)^*$, we construct the NFA using Thompson's constructi
 
 \section{Question 3} 
 
-For the DFA in Question 3(a), we convert it to a regular expression using the state elimination method.
+We convert the given finite automata to regular expressions using the state elimination method.
 
-\subsection{Step 1: Original NFA (Figure a)}
+\subsection{Part (a)}
+
+\paragraph{Step 1: Original NFA}
 
 Original NFA with states 1 (initial) and 2 (accepting):
 
@@ -168,7 +170,7 @@ Original NFA with states 1 (initial) and 2 (accepting):
 \end{tikzpicture}
 \end{center}
 
-\subsection{Step 2: Add New Start and Accept States}
+\paragraph{Step 2: Add New Start and Accept States}
 
 We add a new start state $s$ and a new accept state $f$ with $\epsilon$-transitions:
 
@@ -189,7 +191,7 @@ We add a new start state $s$ and a new accept state $f$ with $\epsilon$-transiti
 \end{tikzpicture}
 \end{center}
 
-\subsection{Step 3: Eliminate State 2}
+\paragraph{Step 3: Eliminate State 2}
 
 When eliminating state 2, we need to consider:
 \begin{itemize}
@@ -212,7 +214,7 @@ After eliminating state 2:
 \end{tikzpicture}
 \end{center}
 
-\subsection{Step 4: Eliminate State 1}
+\paragraph{Step 4: Eliminate State 1}
 
 After eliminating state 1, the regular expression on the edge from $s$ to $f$ is:
 
@@ -231,11 +233,13 @@ After eliminating state 1, the regular expression on the edge from $s$ to $f$ is
 \boxed{(a \cup ba^*b)^*ba^*}
 \]
 
-\subsection{Question 3(b)}
+\subsection{Part (b)}
 
-For the DFA in Question 3(b), states 1 and 3 are accepting. We follow the same procedure.
+For the DFA in Question 3(b), states 1 and 3 are accepting.
 
-\textbf{Step 1:} Add new start state $s$ and new accept state $f$:
+\paragraph{Step 1: Add New Start and Accept States}
+
+Add new start state $s$ and new accept state $f$:
 
 \begin{center}
 \begin{tikzpicture}[shorten >=1pt, node distance=2.2cm, on grid, auto]
@@ -257,7 +261,7 @@ For the DFA in Question 3(b), states 1 and 3 are accepting. We follow the same p
 \end{tikzpicture}
 \end{center}
 
-\textbf{Step 2:} Eliminate state 2:
+\paragraph{Step 2: Eliminate State 2}
 
 State 2 has self-loop $a$ and transitions to/from state 3 with $b$. When eliminated:
 \begin{itemize}
@@ -282,7 +286,7 @@ State 2 has self-loop $a$ and transitions to/from state 3 with $b$. When elimina
 \end{tikzpicture}
 \end{center}
 
-\textbf{Step 3:} Eliminate state 3:
+\paragraph{Step 3: Eliminate State 3}
 
 We have paths involving state 3. The self-loop on 3 is $(ba^*b)^*$, and we need to compute the new edges:
 \begin{itemize}
@@ -305,7 +309,9 @@ After eliminating state 3:
 \end{tikzpicture}
 \end{center}
 
-\textbf{Step 4:} Eliminate state 1 to get the final regular expression:
+\paragraph{Step 4: Eliminate State 1}
+
+After eliminating state 1:
 
 \begin{center}
 \begin{tikzpicture}[shorten >=1pt, node distance=4.5cm, on grid, auto]
@@ -317,9 +323,9 @@ After eliminating state 3:
 \end{tikzpicture}
 \end{center}
 
-\textbf{Final Answer for 3(b):}
+\textbf{Final Answer:}
 \[
-\boxed{\left((a + b)a^*b(ba^*b)^*a\right)^*\left(\epsilon \cup (a + b)a^*b(ba^*b)^*\right)}
+\boxed{\left((a \cup b)a^*b(ba^*b)^*a\right)^*\left(\epsilon \cup (a \cup b)a^*b(ba^*b)^*\right)}
 \]
 
 
