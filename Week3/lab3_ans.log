@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.10.17)  17 MAR 2026 20:30
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.10.17)  23 MAR 2026 17:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -629,21 +629,56 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 [1
 
-] (./lab3_ans.aux)
+]
+
+[2]
+
+[3]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 330.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 330.
+
+
+Overfull \hbox (39.9928pt too wide) in paragraph at lines 368--369
+ [] 
+ []
+
+
+
+[4]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 371.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 371.
+
+
+
+[5]
+
+[6]
+
+[7] (./lab3_ans.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
  ***********
 Package rerunfilecheck Info: File `lab3_ans.out' has not changed.
-(rerunfilecheck)             Checksum: E5AD42441B852FDD21078C5838893A48;96.
+(rerunfilecheck)             Checksum: 3823B39D566CDDC5D7BB2C8A4BE6BB97;2364.
  ) 
 Here is how much of TeX's memory you used:
- 23367 strings out of 469606
- 445312 string characters out of 5465410
- 857149 words of memory out of 5000000
- 51442 multiletter control sequences out of 15000+600000
- 652750 words of font info for 75 fonts, out of 8000000 for 9000
+ 23711 strings out of 469606
+ 451683 string characters out of 5465410
+ 915566 words of memory out of 5000000
+ 51783 multiletter control sequences out of 15000+600000
+ 663371 words of font info for 79 fonts, out of 8000000 for 9000
  430 hyphenation exceptions out of 8191
- 102i,6n,107p,1001b,341s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,6n,107p,1001b,905s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on lab3_ans.pdf (1 page).
+Output written on lab3_ans.pdf (7 pages).
