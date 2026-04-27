@@ -1,0 +1,133 @@
+\documentclass[a4paper, UTF-8]{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows, trees}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{amssymb}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{\indent Theorem}[section]
+\newtheorem{lemma}[theorem]{\indent Lemma}
+\newtheorem{assumption}{\indent Assumption}[section]
+\newtheorem{note}[theorem]{\indent Notation}
+\newtheorem{proposition}[theorem]{\indent Proposition}
+\newtheorem{corollary}[theorem]{\indent Corollary}
+\newtheorem{definition}{\indent Definition}[section]
+\newtheorem{example}{\indent Example}[section]
+\newtheorem{remark}{\indent Remark}[section]
+\newenvironment{solution}{\begin{proof}[\indent\bf Solution]}{\end{proof}}
+\renewcommand{\proofname}{\indent\bf Proof}
+
+\begin{document}
+
+\title{\bf{Lab 8 Answers}}
+\author{Yanqiao Chen*\\ 
+  Department of Computer Science and Engineering\\
+  Southern University of Science and Technology\\
+  \texttt{12412115@mail.sustech.edu.cn}
+  }
+\maketitle
+
+\section{Question 1} 
+
+\begin{itemize}
+    \item Yes. $M$ accept $0100$. 
+    \item No. $M$ does not accept $011$. 
+    \item No. This is not an appropriate input. 
+    \item No. This is not an appropriate input.
+    \item No. The language of $M$ is not empty, as $M$ accepts $0100$.
+    \item Yes. $M$ is definitely equal to itself.
+\end{itemize} 
+
+\section{Question 2} 
+
+We describe it as follows: 
+
+$$
+L = \{\langle M, R \rangle \mid \text{M is a DFA, R is a REX, } L(M) = L(R)\}
+$$
+
+We construct the following decider $D$ to decide $L$:
+$$
+D = \text{``On input } \langle M, R \rangle \text{, where M is a DFA and R is a REX:}
+$$
+\begin{enumerate}
+    \item Convert $R$ into an equivalent NFA $N$. 
+    \item Convert $N$ into an equivalent DFA $M'$. 
+    \item Run the Turing machine for $EQ_{DFA}$ on input $\langle M, M' \rangle$. 
+    \item If the Turing machine accepts, then accept. Otherwise, reject.''
+\end{enumerate}
+Since we have proved that $EQ_{DFA}$ is decidable, then $D$ is a decider for $L$. Therefore, $L$ is decidable.
+
+\section{Question 3} 
+
+Let DFA $M$ accept language $\overline{L(A)}$, then $M \in E_{DFA}$, which is decidable. Therefore, we can construct a Turing machine $D$ to decide $ALL_{DFA}$ as follows:
+$$
+D = \text{``On input } \langle A \rangle \text{, where A is a DFA:}
+$$
+\begin{enumerate} 
+    \item Construct a DFA $M$ such that $L(M) = \overline{L(A)}$. 
+    \item Run the decider for $E_{DFA}$ on input $\langle M \rangle$. 
+    \item If the Turing machine accepts, then accept. Otherwise, reject.''
+\end{enumerate}
+Since $E_{DFA}$ is decidable, then $D$ is a decider for $ALL_{DFA}$. Therefore, $ALL_{DFA}$ is decidable.
+
+\section{Question 4} 
+
+We construct the following decider $D$ to decide $A_{\epsilon CFG}$: 
+
+$$
+D = \text{``On input } \langle G \rangle \text{, where G is a CFG:}
+$$
+\begin{enumerate}
+    \item Run the decider for $A_{CFG}$ on input $\langle G, \epsilon \rangle$. 
+    \item If the Turing machine accepts, then accept. Otherwise, reject.''
+\end{enumerate}
+
+\section{Question 5} 
+
+We construct the following Turing machine that recognizes $\overline{E_{TM}}$: 
+$$
+R = \text{``On input } \langle M \rangle \text{, where M is a Turing machine:}
+$$
+
+\begin{enumerate}
+    \item For $i = 1, 2, \ldots$ 
+        \item For $j = 1, 2, \ldots, i$ 
+            \item Run $M$ on input $s_j$ for $i$ steps, where $s_j$ is the $j$-th string in the lexicographical order of $\Sigma^*$.
+            \item If $M$ accepts, then accept. 
+\end{enumerate} 
+
+Then $R$ accept if and only if there exists a string that is accepted by $M$. It will loop if $M$ does not accept any string. Therefore, $R$ recognizes $\overline{E_{TM}}$.
+
+\section{Question 6} 
+
+In the proof of $EQ_{DFA}$ is decidable, we construct a Turing machine $D$ to decide $E_{DFA}$ on $M$ with language $L(M) = L(A) \Delta L(B)$. Thus, there are $n_1n_2$ states in $M$, where $n_1$ and $n_2$ are the number of states in $A$ and $B$ respectively. 
+
+For any input, if the input is longer than $n_1n_2 - 1$, then there exists a state that is visited twice in the computation of $M$ on the input. Let us denote the input as $xyz$, where $x$ is the substring before the multiple visited state and $z$ is the one that is after the multiple visited state, where $|xz| \leq n_1n_2 - 1$. Then to test if $A$ and $B$ disagree on any input, we only need to test the inputs that are at most $n_1n_2 - 1$ on $M$. For any input that is longer than $n_1n_2 - 1$, we can divide it into three parts $xyz$ as mentioned above and the result will automatically be the same as $xz$ which falls into the case of input shorter than $n_1n_2 - 1$. Therefore, we only need to test the inputs that are shorter than $n_1n_2 - 1$ to determine if $M_1$ and $M_2$ disagree on any input. 
+
+Thus, from the analysis above, we can determine if $M$ is empty by testing the inputs that are shorter than $n_1n_2 - 1$. If $M$ is empty, then $L(A) = L(B)$, and vice versa. 
+
+Thus, the size will be 
+$$
+\sum_{i = 0}^{n_1n_2 - 1} |\Sigma|^i = \begin{cases} 
+\frac{|\Sigma|^{n_1n_2} - 1}{|\Sigma| - 1}, & \text{if } |\Sigma| > 1 \\
+n_1n_2 - 1, & \text{if } |\Sigma| = 1
+\end{cases}
+$$
+
+The proof is similar to the pumping lemma for regular languages.
+
+
+\end{document}
