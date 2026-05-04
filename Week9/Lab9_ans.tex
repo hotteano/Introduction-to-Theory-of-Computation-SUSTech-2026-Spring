@@ -42,7 +42,7 @@
 \section{Question 1} 
 
 \begin{itemize}
-  \item No. For $n_1 = 1 \ne n_2 = 3$, we have $f(n_1) = f(n_3) = 6$. 
+  \item No. For $n_1 = 1 \ne n_2 = 3$, we have $f(n_1) = f(n_2) = 6$. 
   \item No. For $m = 10$, there is no such $n$ such that $f(n) = m$. 
   \item No. From the previous two question we may know. 
   \item Yes. For any $n_1 \ne n_2$, $f(n_1) \ne f(n_2)$. 
@@ -51,6 +51,53 @@
 \end{itemize}
 
 \section{Question 2} 
+
+Let there exists a bijection such that 
+$$
+f:\mathbb{Z} \to S
+$$
+where $S = \{0, 1, 2\}^\mathbb{N}$. 
+
+Constructing the table: 
+
+\begin{center}
+  \begin{tabular}{c|c}
+    $n$ & $f(n)$ \\
+    \hline
+    0 & $10202\ldots$ \\
+    1 & $02102\ldots$\\
+    2 & $12021\ldots$ \\
+    $\cdots$ & $\cdots$ \\
+  \end{tabular}
+\end{center}
+
+We construct a sequence that is not in $f(n)$: Let the $i$-th digit of the $i$-th sequence be $k$, then the $i$-th digit of the sequence $s_i \in \{0, 1, 2\} \setminus \{k\}$. Then $s$ is not in the table, which leads to a contradiction.
+
+\section{Question 3} 
+
+Classify all the triple with the same $i + j + k = n$ together, for each class, there are 
+$$
+\binom{n + 3 - 1}{3 - 1} = \binom{n + 2}{2} = \frac{(n + 1)(n + 2)}{2}
+$$
+in one class. Then for any $(i, j, k)$, they correspond to a unique $\sum_{i = 0}^{n - 1} \frac{(i + 1)(i + 2)}{2} + k$ where $k \in [1, \frac{(n+1)(n+2)}{2}]$. Thus $O$ is countable.
+
+\section{Question 4} 
+
+For any Turing machine, the transition function will be 
+$$
+\delta(s, a) = (s', a', d)
+$$
+
+There are no symbol on the tape, so if the Turing machine write no symbol, as Turing machine have only finite states, the Turing machine will eventually reach a state that it has been before, which leads to an infinite loop. Then it will never write any symbol on the tape afterwards. Thus, the decider only have to simulate the Turing machine for $|S| + 1$ steps, where $S$ is the state set of the Turing machine. If it does not write any symbol on the tape, then we can conclude that it will never write any symbol on the tape. Otherwise, it will write some symbol on the tape.
+
+\section{Question 5} 
+
+Yes. Since the state is encoded in the input itself. Thus, We only have to decode the input and count the number of state in the $M$. If $|S| \geq 481$, accept. Otherwise, reject.
+
+\section{Question 6} 
+
+Construct a DFA $A$ that accept all string with even number of $1$. Then we construct the intersection of $M$ and $A$, i.e., $M \cap A$, which is a DFA. Then we decide whether $L(M \cap A) = \emptyset$. If it is empty, then we can conclude that $M$ accept no string with even number of $1$. Otherwise, there exists a string with even number of $1$ that is accepted by $M$. As $E_{DFA}$ is decidable, we can decide whether $L(M \cap A) = \emptyset$. Thus the problem is decidable.
+
 
 
 
