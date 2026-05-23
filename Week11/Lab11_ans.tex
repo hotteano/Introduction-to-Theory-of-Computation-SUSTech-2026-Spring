@@ -1,0 +1,137 @@
+\documentclass[a4paper, UTF-8]{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows, trees}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{amssymb}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{\indent Theorem}[section]
+\newtheorem{lemma}[theorem]{\indent Lemma}
+\newtheorem{assumption}{\indent Assumption}[section]
+\newtheorem{note}[theorem]{\indent Notation}
+\newtheorem{proposition}[theorem]{\indent Proposition}
+\newtheorem{corollary}[theorem]{\indent Corollary}
+\newtheorem{definition}{\indent Definition}[section]
+\newtheorem{example}{\indent Example}[section]
+\newtheorem{remark}{\indent Remark}[section]
+\newenvironment{solution}{\begin{proof}[\indent\bf Solution]}{\end{proof}}
+\renewcommand{\proofname}{\indent\bf Proof}
+
+\begin{document}
+
+\title{\bf{Lab 11 Answers}}
+\author{Yanqiao Chen\\ 
+  Department of Computer Science and Engineering\\
+  Southern University of Science and Technology\\
+  \texttt{12412115@mail.sustech.edu.cn}
+  }
+\maketitle
+
+\section{Question 1} 
+
+\subsection{a)} 
+
+We construct a verifier $V$ for 3CNF formula: For a assignment $x$ and a 3CNF formula $\phi$, $V$ checks if $x$ satisfies $\phi$. If it does, $V$ accepts; otherwise, it rejects. Since the length of $x$ is polynomial in the length of $\phi$, and $V$ runs in polynomial time, we have that 3-SAT is in NP.
+
+\subsection{b)} 
+
+Given a $k$ vertex cover, we can verify if it is a valid vertex cover by checking if every edge in the graph has at least one endpoint in the vertex cover. Since there are at most $O(|E|)$ edges in the graph, and checking each edge takes constant time, the total verification time is polynomial in the size of the graph. Therefore, vertex cover is in NP.
+
+\subsection{c)} 
+
+Given a TSP route, we can verify if it is a valid TSP route by checking if it visits each city exactly once and returns to the starting city. We can also calculate the total distance of the route and check if it is less than or equal to a given threshold. Since there are at most $O(n)$ cities, and checking each city and calculating the distance takes polynomial time, the total verification time is polynomial in the size of the input. Therefore, TSP is in NP.
+
+\subsection{d)} 
+
+Given a max-cut solution for the graph, we can verify if it is a valid max-cut solution by checking if the cut divides the vertices into two disjoint sets and if the number of edges crossing the cut is greater than or equal to a given threshold. Since there are at most $O(|V|)$ vertices and $O(|E|)$ edges in the graph, and checking each vertex and edge takes polynomial time, the total verification time is polynomial in the size of the graph. Therefore, max-cut is in NP.
+
+\subsection{e)} 
+
+Given a 3-coloring of a graph, we can verify if it is a valid 3-coloring by checking if each vertex is colored with one of three colors and if no two adjacent vertices share the same color. Since there are at most $O(|V|)$ vertices and $O(|E|)$ edges in the graph, and checking each vertex and edge takes polynomial time, the total verification time is polynomial in the size of the graph. Therefore, 3-coloring is in NP.
+
+\section{Question 2} 
+
+We now show that $\textbf{NP}$ is closed under union, concatenation, and star operations. 
+
+\begin{itemize}
+  \item \textbf{Union:} Let $L_1$ and $L_2$ be two languages in NP. Then there exist two polynomial-time verifiers $V_1$ and $V_2$ for $L_1$ and $L_2$, respectively. We can construct a new verifier $V$ for the union language $L = L_1 \cup L_2$ as follows: Given an input string $x$ and a certificate $c$, $V$ runs both $V_1$ and $V_2$ on $x$ and $c$. If either verifier accepts, then $V$ accepts; otherwise, it rejects. Since both verifiers run in polynomial time, the new verifier also runs in polynomial time. Therefore, $\textbf{NP}$ is closed under union.
+  \item \textbf{Concatenation:} Let $L_1$ and $L_2$ be two languages in NP. Then there exist two polynomial-time verifiers $V_1$ and $V_2$ for $L_1$ and $L_2$, respectively. We can construct a new verifier $V$ for the concatenation language $L = L_1 L_2$ as follows: Given an input string $x$ and a certificate $(i, c_1, c_2)$ (including the split position), the verifier run $V_1$ on $c_2$ in the first part of $x$ and $V_2$ on $c_2$ in the second part, both in polynomial time. Therefore, $\textbf{NP}$ is closed under concatenation.
+  \item \textbf{Star:} Let $L$ be a language in NP. The certificate contains two part: solution and the spliting notation. The verifier $V$ for the star language $L^*$ works as follows: Given an input string $x$, $V$ uses the splitting notation to split $x$ into substrings. Then, for each substring, $V$ runs the verifier for $L$ on it. The certificate will be $((i_1, i_2, \ldots, i_{k-1}), (c_1, c_2, \ldots, c_{k}))$. If all substrings are accepted by the verifier for $L$, then $V$ accepts; otherwise, it rejects. Since there are at most $O(|x|)$ substrings and each verifier runs in polynomial time, the new verifier also runs in polynomial time. Therefore, $\textbf{NP}$ is closed under star.
+\end{itemize}
+
+\section{Question 3} 
+
+\begin{itemize}
+  \item[a.] Yes. All language in $\textbf{P}$ can be verified in polynomial time. For the string $x$ and a certificate $c$, we construct the following verifier $V$: $V$ runs the polynomial-time algorithm for the language on input $x$. If it accepts, then $V$ accepts; otherwise, it rejects. Since the algorithm runs in polynomial time, the verifier also runs in polynomial time. Therefore, $\textbf{P} \subseteq \textbf{NP}$. (This means that we simply ignore the certificate and run the algorithm for the language.) 
+  \item[b.] True. Let $M'$ simulate the behavior of $M$ on input $x$, if $M$ accepts $x$ then $M'$ reject, and if $M$ rejects $x$ then $M'$ accepts. Since $M$ runs in polynomial time, $M'$ also runs in polynomial time. Therefore, if a language is in $\textbf{P}$, then its complement is also in $\textbf{P}$.
+  \item[c.] False. $\overline{SAT}$ is $co-NP$-complete. If $\overline{SAT}$ is in $\textbf{P}$, then $co-NP$ is a subset of $\textbf{P}$. Since $\textbf{P}$ is closed under complement, we have that $NP$ is also a subset of $\textbf{P}$. Therefore, $\textbf{P} = \textbf{NP} = \textbf{coNP}$. However, it is widely believed that $\textbf{P} \neq NP$, so we conclude that $\overline{SAT}$ is not in $\textbf{P}$.
+  \item[d.] True. From $b$ we know that if $L$ is in $\textbf{P}$, then $\overline{L}$ is also in $\textbf{P}$. Then $\textbf{P} = \textbf{coP}$. Therefore, since $\textbf{P} \subseteq \textbf{NP}$ and $\textbf{coP} \subseteq \textbf{coNP}$, thus $\textbf{P} \subseteq \textbf{NP} \cap \textbf{coNP}$. 
+  \item[e.] True. If $\textbf{P} = \textbf{NP}$, then $\textbf{coP} = \textbf{coNP}$, and thus $\textbf{P} = \textbf{NP} = \textbf{coP} = \textbf{coNP}$. Therefore, $\textbf{NP} = \textbf{coNP}$.
+\end{itemize}
+
+\section{Question 4} 
+
+2-Color is in $\textbf{NP}$ for we can construct a verifier that checks if a given coloring of the graph is valid. However, 2-Color is also in $\textbf{P}$ because we can determine if a graph is bipartite (which is equivalent to being 2-colorable) using a two-coloring algorithm that runs in linear time. Therefore, 2-Color is in both $\textbf{P}$ and $\textbf{NP}$. We describe the algorithm for 2-coloring a graph as follows:
+
+\begin{algorithm}[H]
+  \caption{2-Coloring Algorithm}
+  \begin{algorithmic}[1]
+    \Procedure{TwoColor}{$G$}
+      \State Initialize a color array $color$ of size $|V|$ with all values set to -1 (indicating uncolored).
+      \For{each vertex $v$ in $V$}
+        \If{$color[v] = -1$} \Comment{If the vertex is uncolored}
+          \State $color[v] \gets 0$ \Comment{Start coloring with color 0}
+          \State Create a queue $Q$ and enqueue $v$
+          \While{$Q$ is not empty}
+            \State $u \gets Q.dequeue()$
+            \For{each neighbor $w$ of $u$}
+              \If{$color[w] = -1$} \Comment{If the neighbor is uncolored}
+                \State $color[w] \gets 1 - color[u]$ \Comment{Color with opposite color}
+                \State Enqueue $w$
+              \ElsIf{$color[w] = color[u]$} \Comment{If the neighbor has the same color}
+                \State \Return False \Comment{The graph is not 2-colorable}
+              \EndIf
+            \EndFor
+          \EndWhile
+        \EndIf
+      \EndFor
+      \State \Return True \Comment{The graph is 2-colorable}
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+\section{Question 5}
+
+We can verify if a given assignment satisfies a 2-CNF formula in polynomial time by checking each clause in the formula. Each clause has at most two literals, so we can check if at least one of the literals is true under the given assignment. If all clauses are satisfied, then the formula is satisfied; otherwise, it is not. Therefore, 2-SAT is in $\textbf{NP}$.
+
+For any clauses in the 2-CNF formula, $(x_i \lor x_j) = (\lnot x_i \rightarrow x_j) \land (\lnot x_j \rightarrow x_i)$, this can be transformed into a implication graph where each variable and its negation are represented as vertices, and the implications are represented as directed edges. To determine if the 2-CNF formula is satisfiable, we can check if a variable and its negation are in the same strongly connected component in the implication graph. If any variable and its negation belong to the same SCC, then the formula is unsatisfiable; otherwise, it is satisfiable. This can be done using depth-first search (DFS) or breadth-first search (BFS) in linear time with respect to the number of variables and clauses. Therefore, 2-SAT can be solved in polynomial time.
+
+The algorithm for solving 2-SAT is as follows:
+\begin{algorithm}[H]
+  \caption{2-SAT Algorithm}
+  \begin{algorithmic}[1]
+    \Procedure{TwoSAT}{$\phi$}
+      \State Construct the implication graph $G$ from the 2-CNF formula $\phi$
+      \State Perform a depth-first search (DFS) on $G$ to find strongly connected components (SCCs)
+      \For{each variable $x_i$}
+        \If{$x_i$ and $\lnot x_i$ are in the same SCC}
+          \State \Return False \Comment{The formula is unsatisfiable}
+        \EndIf
+      \EndFor
+      \State \Return True \Comment{The formula is satisfiable}
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+\end{document}
