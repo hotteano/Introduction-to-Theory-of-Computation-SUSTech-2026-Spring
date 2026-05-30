@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.6)  30 MAY 2026 15:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.6)  30 MAY 2026 21:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -501,6 +501,10 @@ File: pgflibraryarrows.meta.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfarrowlength=\dimen270
 \pgfarrowwidth=\dimen271
 \pgfarrowlinewidth=\dimen272
+)
+(c:/texlive/2026/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
+brarycalc.code.tex
+File: tikzlibrarycalc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ) (c:/texlive/2026/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks44
@@ -800,22 +804,23 @@ Package microtype Info: Loading generic protrusion settings for font family
  [1
 
 {c:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2026/
-texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}] (./Lab13_ans.aux)
+texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}] [2] [3] [4] [5] [6] (./La
+b13_ans.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `Lab13_ans.out' has not changed.
-(rerunfilecheck)             Checksum: FBEA7AB04AE37EFF4825E4B537E8B9C6;236.
+(rerunfilecheck)             Checksum: C60D49A0968D1E06100836DD57D7CF53;620.
  ) 
 Here is how much of TeX's memory you used:
- 24658 strings out of 468830
- 466180 string characters out of 5454208
- 895638 words of memory out of 5000000
- 53070 multiletter control sequences out of 15000+600000
- 643065 words of font info for 106 fonts, out of 8000000 for 9000
+ 25002 strings out of 468830
+ 471995 string characters out of 5454208
+ 897351 words of memory out of 5000000
+ 53357 multiletter control sequences out of 15000+600000
+ 645024 words of font info for 129 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 102i,13n,107p,1006b,458s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,13n,107p,1006b,705s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/tex
 live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2026
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2026/texmf-dis
@@ -826,15 +831,15 @@ amsfonts/cm/cmr7.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm
 b><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texl
 ive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2026/t
 exmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb><c:/texlive/2026/texmf-dist/
-fonts/type1/public/cm-super/sfrm0500.pfb><c:/texlive/2026/texmf-dist/fonts/type
-1/public/cm-super/sfrm0700.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/c
-m-super/sfrm1000.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sf
-rm1200.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb
->
-Output written on Lab13_ans.pdf (1 page, 177994 bytes).
+fonts/type1/public/cm-super/sfcc1000.pfb><c:/texlive/2026/texmf-dist/fonts/type
+1/public/cm-super/sfrm0500.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/c
+m-super/sfrm0700.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sf
+rm1000.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb
+><c:/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on Lab13_ans.pdf (6 pages, 220704 bytes).
 PDF statistics:
- 111 PDF objects out of 1000 (max. 8388607)
- 75 compressed objects within 1 object stream
- 6 named destinations out of 1000 (max. 500000)
- 31269 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 156 PDF objects out of 1000 (max. 8388607)
+ 112 compressed objects within 2 object streams
+ 15 named destinations out of 1000 (max. 500000)
+ 33349 words of extra memory for PDF output out of 35830 (max. 10000000)
 

@@ -5,7 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{tikz}
-\usetikzlibrary{automata, positioning, arrows, trees, arrows.meta}
+\usetikzlibrary{automata, positioning, arrows, trees, arrows.meta, calc}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
@@ -101,8 +101,271 @@ In this tableau, this is satisfied because $x_{5,5,q_{\text{acc}}}$ is true.
 
 \section{Question 3} 
 
-We will give an conterexample to show that $2\times 3$ rectangular is not legal but the two $2\times 2$ rectangles are legal.
+We give a counterexample to show that checking only $2\times 2$ windows is not
+enough. Consider a Turing machine with the following two transitions:
+\[
+\delta(q,0)=(r,0,L), \qquad \delta(q,1)=(s,1,L),
+\]
+where $r\neq s$.
 
+Now consider the following $2\times 3$ window:
+\[
+\begin{array}{ccc}
+0 & q & 1\\
+r & 0 & 1
+\end{array}
+\]
+This window is illegal. In the first row, the machine is in state $q$ and is
+scanning the symbol $1$. Therefore the transition that should be used is
+$\delta(q,1)=(s,1,L)$, so the second row should contain state $s$ in the left
+cell, not state $r$.
+
+However, the two $2\times 2$ subwindows both look legal. The left subwindow is
+\[
+\begin{array}{cc}
+0 & q\\
+r & 0
+\end{array}
+\]
+which can appear as part of the legal $2\times 3$ window
+\[
+\begin{array}{ccc}
+0 & q & 0\\
+r & 0 & 0
+\end{array}
+\]
+using the transition $\delta(q,0)=(r,0,L)$. The right subwindow is
+\[
+\begin{array}{cc}
+q & 1\\
+0 & 1
+\end{array}
+\]
+which can appear as part of the legal $2\times 3$ window
+\[
+\begin{array}{ccc}
+0 & q & 1\\
+s & 0 & 1
+\end{array}
+\]
+using the transition $\delta(q,1)=(s,1,L)$.
+
+Thus every $2\times 2$ subwindow may be legal while the whole $2\times 3$
+window is illegal. Hence the Cook--Levin proof would fail with $2\times 2$
+windows, because such windows cannot always verify one complete transition of
+the Turing machine.
+
+\section{Question 4} 
+
+First, $UHAMPATH\in NP$, because given a path from $s$ to $t$, we can check in
+polynomial time that every vertex appears exactly once and that every
+consecutive pair of vertices is connected by an edge.
+
+Now we reduce $HAMPATH$ to $UHAMPATH$. Let $\langle G,s,t\rangle$ be an
+instance of directed $HAMPATH$, where $G=(V,E)$. For each vertex $u\in V$, create
+three vertices $u^{in},u^{mid},u^{out}$ in the undirected graph $G'$. Inside each
+gadget, add the two undirected edges
+\[
+\{u^{in},u^{mid}\},\qquad \{u^{mid},u^{out}\}.
+\]
+The gadget is shown below:
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto]
+   \node[state] (u_in) {$u^{in}$};
+   \node[state] (u_mid) [below=of u_in] {$u^{mid}$};
+   \node[state] (u_out) [below=of u_mid] {$u^{out}$};
+   \path[-] (u_in) edge (u_mid)
+            (u_mid) edge (u_out);
+\end{tikzpicture}
+\end{center}
+
+For each directed edge $(u,v)\in E$, add the undirected edge
+\[
+\{u^{out},v^{in}\}
+\]
+to $G'$. Finally, set the start and end vertices in $G'$ to be
+\[
+s'=s^{in},\qquad t'=t^{out}.
+\]
+This construction is polynomial, since each vertex is replaced by three
+vertices and each directed edge gives one undirected edge.
+
+If $G$ has a directed Hamiltonian path
+\[
+s=v_1\to v_2\to \cdots \to v_n=t,
+\]
+then $G'$ has the undirected Hamiltonian path
+\[
+v_1^{in},v_1^{mid},v_1^{out},
+v_2^{in},v_2^{mid},v_2^{out},
+\ldots,
+v_n^{in},v_n^{mid},v_n^{out}.
+\]
+The edges inside each gadget exist by construction, and the edge
+$\{v_i^{out},v_{i+1}^{in}\}$ exists because $(v_i,v_{i+1})\in E$.
+
+Conversely, suppose $G'$ has an undirected Hamiltonian path from $s^{in}$ to
+$t^{out}$. For every vertex $u$, the vertex $u^{mid}$ is adjacent only to
+$u^{in}$ and $u^{out}$. Hence a Hamiltonian path must pass through the three
+vertices of each gadget consecutively, either as
+\[
+u^{in},u^{mid},u^{out}
+\]
+or in the reverse order. Since the whole path starts at $s^{in}$, the first
+gadget must be traversed from $s^{in}$ to $s^{out}$. After that, the only way to
+move to another gadget is through an edge of the form
+$\{u^{out},v^{in}\}$, so the next gadget is also entered at its $v^{in}$ vertex
+and must be traversed as $v^{in},v^{mid},v^{out}$. Repeating this argument, all
+gadgets are traversed from their $in$ vertex to their $out$ vertex.
+
+Therefore the order in which the gadgets appear gives a directed path in $G$:
+whenever the path in $G'$ goes from $u^{out}$ to $v^{in}$, the construction
+guarantees that $(u,v)\in E$. Since the Hamiltonian path in $G'$ visits every
+gadget exactly once and goes from $s^{in}$ to $t^{out}$, the corresponding path
+in $G$ visits every vertex exactly once and goes from $s$ to $t$. Thus $G$ has a
+directed Hamiltonian path iff $G'$ has an undirected Hamiltonian path from
+$s'$ to $t'$.
+
+Hence $UHAMPATH$ is NP-hard. Since $UHAMPATH\in NP$, it is NP-Complete.
+
+\section{Question 5} 
+
+First, \textsc{Vertex Cover} is in NP. Given a set $C$ of at most $k$ vertices, we can
+check in polynomial time whether every edge of $G$ has at least one endpoint in
+$C$.
+
+Now we reduce $3SAT$ to \textsc{Vertex Cover}. Let
+\[
+\phi=\bigwedge_{j=1}^{c}(\ell_{j,1}\vee \ell_{j,2}\vee \ell_{j,3})
+\]
+be a $3$CNF formula with variables $x_1,\ldots,x_v$. We construct an
+undirected graph $G$ as follows.
+
+For each variable $x_i$, create two vertices labelled $x_i$ and $\overline{x_i}$
+and add the edge between them. This edge forces every vertex cover of the target
+size to choose at least one of the two literals.
+
+\begin{center}
+\begin{tikzpicture}[
+  literal/.style={circle, draw, minimum size=8mm, inner sep=1pt},
+  every path/.style={line width=0.5pt}
+]
+  \node[literal] (x) {$x_i$};
+  \node[literal, right=1.8cm of x] (nx) {$\overline{x_i}$};
+  \draw (x) -- (nx);
+\end{tikzpicture}
+\end{center}
+
+For each clause $C_j=(\ell_{j,1}\vee \ell_{j,2}\vee \ell_{j,3})$, create three
+vertices labelled $\ell_{j,1},\ell_{j,2},\ell_{j,3}$ and connect them as a
+triangle. Then connect each clause vertex $\ell_{j,r}$ to the vertex with the
+same literal label in the corresponding variable gadget.
+
+\begin{center}
+\begin{tikzpicture}[
+  literal/.style={circle, draw, minimum size=8mm, inner sep=1pt},
+  every path/.style={line width=0.5pt}
+]
+  \node[literal] (a) {$\ell_{j,1}$};
+  \node[literal, right=1.8cm of a] (b) {$\ell_{j,2}$};
+  \node[literal, below=1.35cm of $(a)!0.5!(b)$] (c) {$\ell_{j,3}$};
+  \draw (a) -- (b) -- (c) -- (a);
+
+  \node[literal, above=1.4cm of a] (va) {$\ell_{j,1}$};
+  \node[literal, above=1.4cm of b] (vb) {$\ell_{j,2}$};
+  \node[literal, below=1.4cm of c] (vc) {$\ell_{j,3}$};
+  \draw[dashed] (a) -- (va);
+  \draw[dashed] (b) -- (vb);
+  \draw[dashed] (c) -- (vc);
+  \node[above=0.05cm of va] {\scriptsize variable gadget};
+  \node[below=0.05cm of vc] {\scriptsize variable gadget};
+\end{tikzpicture}
+\end{center}
+
+For example, if a clause is
+\[
+C_1=(x_1\vee \overline{x_2}\vee x_3),
+\]
+then the corresponding part of the graph looks as follows. The dashed edges are
+the edges connecting the clause gadget to the variable gadgets.
+
+\begin{center}
+\begin{tikzpicture}[
+  literal/.style={circle, draw, minimum size=7.5mm, inner sep=1pt},
+  chosen/.style={circle, draw, fill=gray!25, minimum size=7.5mm, inner sep=1pt},
+  every path/.style={line width=0.5pt}
+]
+  \node[chosen] (x1) at (0,2.1) {$x_1$};
+  \node[literal] (nx1) at (1.4,2.1) {$\overline{x_1}$};
+  \draw (x1) -- (nx1);
+
+  \node[literal] (x2) at (3.0,2.1) {$x_2$};
+  \node[chosen] (nx2) at (4.4,2.1) {$\overline{x_2}$};
+  \draw (x2) -- (nx2);
+
+  \node[chosen] (x3) at (6.0,2.1) {$x_3$};
+  \node[literal] (nx3) at (7.4,2.1) {$\overline{x_3}$};
+  \draw (x3) -- (nx3);
+
+  \node[literal] (c1) at (2.3,0) {$x_1$};
+  \node[chosen] (c2) at (3.7,-1.35) {$\overline{x_2}$};
+  \node[chosen] (c3) at (5.1,0) {$x_3$};
+  \draw (c1) -- (c2) -- (c3) -- (c1);
+
+  \draw[dashed] (c1) -- (x1);
+  \draw[dashed] (c2) -- (nx2);
+  \draw[dashed] (c3) -- (x3);
+
+  \node at (3.7,2.85) {\scriptsize variable gadgets};
+  \node at (3.7,-2.05) {\scriptsize clause gadget for $C_1$};
+\end{tikzpicture}
+\end{center}
+
+In this example, the shaded vertices show the contribution of the satisfying
+assignment $x_1=\text{true}$, $x_2=\text{false}$, and $x_3=\text{true}$: one
+vertex is chosen from each variable gadget, and two vertices are chosen from the
+clause triangle.
+
+Finally, set
+\[
+k=v+2c.
+\]
+The construction is polynomial, since it creates $2v+3c$ vertices and
+$v+6c$ edges.
+
+If $\phi$ is satisfiable, take a satisfying assignment. For each variable gadget,
+put into the cover the vertex corresponding to the true literal: choose $x_i$ if
+$x_i$ is true, and choose $\overline{x_i}$ if $x_i$ is false. This covers all
+variable-gadget edges. For each clause, at least one literal is true. In the
+clause triangle, leave one true literal vertex unchosen and put the other two
+clause vertices into the cover. The two chosen vertices cover all three edges of
+the triangle. The edge from the unchosen true clause vertex to its variable
+gadget is covered by the already chosen true literal vertex in the variable
+gadget, and the other two connecting edges are covered by the two chosen clause
+vertices. Thus we obtain a vertex cover of size $v+2c=k$.
+
+Conversely, suppose $G$ has a vertex cover $C$ of size at most $k=v+2c$. Each
+variable edge requires at least one chosen endpoint, so the $v$ variable gadgets
+require at least $v$ vertices. Each clause triangle requires at least two chosen
+vertices, so the $c$ clause gadgets require at least $2c$ vertices. Since
+$|C|\le v+2c$, the cover must choose exactly one vertex from each variable
+gadget and exactly two vertices from each clause gadget.
+
+Define a truth assignment by setting $x_i$ to true iff the vertex $x_i$ is chosen
+in the variable gadget. Consider any clause gadget. Since exactly two vertices
+of its triangle are chosen, one clause vertex is not chosen. The edge connecting
+this unchosen clause vertex to the corresponding variable gadget must still be
+covered, so the corresponding variable-gadget vertex is chosen. By the definition
+of the assignment, that literal is true. Hence every clause has at least one true
+literal, so $\phi$ is satisfiable.
+
+Therefore
+\[
+\phi\in 3SAT \iff \langle G,k\rangle\in \text{VERTEX COVER}.
+\]
+Since $3SAT$ is NP-complete and the reduction is polynomial, \textsc{Vertex
+Cover} is NP-hard. Together with \textsc{Vertex Cover} being in NP, this proves
+that \textsc{Vertex Cover} is NP-complete.
 
 
 
