@@ -42,6 +42,68 @@
 
 \subsection{a)}
 
+The computation of $M$ on $w=111$ is
+\[
+q_0 111\bot \;\vdash\; 1q_1 11\bot \;\vdash\; 11q_0 1\bot
+\;\vdash\; 111q_1\bot \;\vdash\; 111\bot q_{\text{acc}}.
+\]
+Thus the $5 \times 5$ tableau is as follows:
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$q_0$ & 1 & 1 & 1 & $\bot$ \\
+\hline
+1 & $q_1$ & 1 & 1 & $\bot$ \\
+\hline
+1 & 1 & $q_0$ & 1 & $\bot$ \\
+\hline
+1 & 1 & 1 & $q_1$ & $\bot$ \\
+\hline
+1 & 1 & 1 & $\bot$ & $q_{\text{acc}}$ \\
+\hline
+\end{tabular}
+\caption{The $5 \times 5$ tableau for $M$ on input $111$.}
+\label{tab:5x5}
+\end{table}
+
+\subsection{b)}
+
+Let $x_{i,j,s}$ be the Boolean variable which is true iff the cell in row $i$ and
+column $j$ of the tableau contains symbol/state $s$.
+
+For the input $w=111$, the starting configuration is $q_0 111\bot$, so
+\[
+\phi_{\text{start}}
+= x_{1,1,q_0} \land x_{1,2,1} \land x_{1,3,1}
+\land x_{1,4,1} \land x_{1,5,\bot}.
+\]
+
+The accepting condition is that $q_{\text{acc}}$ appears somewhere in the tableau:
+\[
+\phi_{\text{accept}}
+= \bigvee_{i=1}^{5}\bigvee_{j=1}^{5} x_{i,j,q_{\text{acc}}}.
+\]
+In this tableau, this is satisfied because $x_{5,5,q_{\text{acc}}}$ is true.
+
+\section{Question 2}
+ 
+\begin{itemize} 
+  \item[a.] illegal 
+  \item[b.] illegal 
+  \item[c.] legal 
+  \item[d.] legal 
+  \item[e.] legal 
+  \item[f.] legal 
+  \item[g.] legal 
+\end{itemize} 
+
+\section{Question 3} 
+
+We will give an conterexample to show that $2\times 3$ rectangular is not legal but the two $2\times 2$ rectangles are legal.
+
+
 
 
 \end{document}
